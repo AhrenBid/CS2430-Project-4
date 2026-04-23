@@ -16,6 +16,7 @@ public class Player
     private int jailBreak;
     private boolean strat; // false = A, true = B
     private Dice dice;
+    private int turnCount;
     
     public Player(String piece, int location, int cash, int jailCount, int jailBreak, boolean strat)
     {
@@ -40,6 +41,8 @@ public class Player
         
         else
             location = dice.getTotal() - (39 - location); 
+        
+        turnCount++;
         
         return new int[] {dice.getTotal(), dice.isDouble() ? 1 : 0};
     }
@@ -163,7 +166,7 @@ public class Player
      * strat = false means the player will ALWAYS either pay to leave jail or use a get out of jail free card if available
      * @return numTurns     return the number of turns spent in jail, DOES NOT do the roll after leaving jail to determine where to move to.
      */
-    public int playJail()
+    public void playJail()
     {
         int numTurns = 1;
         
@@ -171,7 +174,7 @@ public class Player
         {
             int i = 1;
             dice.roll();
-            while (!dice.isDouble())
+            while (!dice.isDouble() && numTurns <= 3)
             {
                 dice.roll();
                 
@@ -182,7 +185,7 @@ public class Player
                 }
                 i++;
             }
-            return numTurns;
+            turnCount += numTurns;
         }
         
         else // if not true don't
@@ -190,7 +193,7 @@ public class Player
             if(jailBreak > 0)
                 jailBreak--;
             
-            return numTurns;
+            turnCount += numTurns;
         }
     }
     
@@ -206,15 +209,15 @@ public class Player
     {
         return String.format("| Piece | Location | Last Roll | Jail Break |\n"
                 +            "| %5s | %8d | %4d %4d | %10d |", piece, location, dice.getDice1(), dice.getDice2(), jailBreak);
+    } 
+    
+    public int getTurnCount()
+    {
+        return turnCount;
     }
     
-    
-    
-    
-    
-    
-    
-    
-            
-    
+    public void resetTurnCount()
+    {
+        turnCount = 0;
+    }
 }
