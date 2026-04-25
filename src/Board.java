@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 
 public class Board {
+    ArrayList<Space> board = new ArrayList<Space>();
 
-    ArrayList<Space> board;
+    public Board() {
+
+        initializeBoard();
+    }
 
     public void initializeBoard() {
-    board = new ArrayList<Space>();
     board.add(new Space("Go", null, "GO"));
     board.add(new Space("Mediterranean Avenue", "Brown", "PROPERTY"));
     board.add(new Space("Community Chest", null, "COMMUNITY_CHEST"));
@@ -46,6 +49,9 @@ public class Board {
     board.add(new Space("Park Place", "Dark Blue", "PROPERTY"));
     board.add(new Space("Luxury Tax", null, "TAX"));
     board.add(new Space("Boardwalk", "Dark Blue", "PROPERTY"));
+    }
 
+    public Space getSpace(int index) {
+    return board.get(index);
     }
 }
