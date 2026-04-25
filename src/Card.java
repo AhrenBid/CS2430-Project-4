@@ -4,12 +4,14 @@ public class Card {
 	private int movement;
 	private int cashNet;
 	private boolean goToJail;
+    private int location;
 	
 	public Card(String power, int location, int cashNet, boolean goToJail, boolean goToGo, boolean leaveJail) {
 		this.power = power;
 		this.movement = movement;
 		this.cashNet = cashNet;
 		this.goToJail = goToJail;
+		this.location = location;
 	}
 	public String getPower() {
 		return power;
@@ -26,4 +28,12 @@ public class Card {
 	public boolean goToGo() {
 		return goToJail;
 	}
+
+    public int getLocation() {
+        return location;
+    }
+
+    public boolean getLeaveJail() {
+        return goToJail;
+    }
 }
