@@ -95,8 +95,8 @@ public class Deck {
 
 	 }
 	 
-	 public Card drawChanceCard() {
-		 if (!chance.isEmpty()) {
+	 public Card drawCommunityCard() {
+		 if (!community.isEmpty()) {
 			 Card choice = community.remove(0);
 			 return choice; 
 		 } 
@@ -107,7 +107,7 @@ public class Deck {
 		 }
 	 }
 	 
-	 public Card drawCommunityCard() {
+	 public Card drawChanceCard() {
 		 if (!chance.isEmpty()) {
 			 Card choice = chance.remove(0);
 			 return choice; 
