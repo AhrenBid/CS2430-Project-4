@@ -1,13 +1,24 @@
+package src;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Provides functionality for community and chance decks
+ * @author Andrew
+ **/
 public class Deck {
 	Random rand = new Random();
 	 ArrayList<Card> community;
 	 ArrayList<Card> chance;
+	 private Player player;
 	 
-	 public Deck() {
+	 /**
+	  * Deck constructor
+	  * @param player
+	  */
+	 public Deck(Player player) {
+		 	this.player = player;
 
 	        community = new ArrayList<>();
 
@@ -16,8 +27,13 @@ public class Deck {
 	        initializeCommunityDeck();
 
 	        initializeChanceDeck();
+	        
 
 	    }
+	 /**
+	  * Initializes AND SHUFFLES the community deck
+	  * @author Andrew
+	  */
 	 //(String power, int location, int cashNet, boolean goToJail, boolean goToGo, boolean leaveJail)
 	 public void initializeCommunityDeck() {
 		 Card goToGo = new Card("Advance to Go", 0, 200, false, true, false);
@@ -52,7 +68,10 @@ public class Deck {
 		 Collections.shuffle(community);
 	
 	 }
-	 
+	 /**
+	  * Initializes AND SHUFFLES the chance deck
+	  * @author Andrew
+	  */
 	// (String power, int location, int cashNet, boolean goToJail, boolean goToGo, boolean leaveJail)
 	 public void initializeChanceDeck() {
 
@@ -63,7 +82,7 @@ public class Deck {
 	     Card nearestRailroad = new Card("Advance to Nearest Railroad", 0, 0, false, false, false);
 	     Card dividend = new Card("Bank pays you dividend of $50", 0, 50, false, false, false);
 	     Card getOutOfJail = new Card("Get Out Of Jail Free", 0, 0, false, false, true);
-	     Card goBackThree = new Card("Go Back 3 Spaces", Player.getLocation() - 3, 0, false, false, false);
+	     Card goBackThree = new Card("Go Back 3 Spaces", player.getLocation() - 3, 0, false, false, false);
 	     Card goToJail = new Card("Go To Jail", 0, 0, true, false, false);
 	     Card repairs = new Card("Make general repairs on all your property", 0, 0, false, false, false);
 	     Card poorTax = new Card("Pay Poor Tax of $15", 0, -15, false, false, false);
@@ -95,6 +114,10 @@ public class Deck {
 
 	 }
 	 
+	 /**
+	  * Draws from community and shuffles if empty
+	  * @return choice (card drawn)
+	  */
 	 public Card drawCommunityCard() {
 		 if (!community.isEmpty()) {
 			 Card choice = community.remove(0);
@@ -106,7 +129,10 @@ public class Deck {
 			 return choice;
 		 }
 	 }
-	 
+	 /**
+	  * Draws from chance and shuffles if empty
+	  * @return choice (card drawn)
+	  */
 	 public Card drawChanceCard() {
 		 if (!chance.isEmpty()) {
 			 Card choice = chance.remove(0);
@@ -119,9 +145,18 @@ public class Deck {
 		 }
 	 }
 	 
+	 /**
+	  * 
+	  * @return community
+	  */
+	 
 	 public ArrayList<Card> returnCommunity() {
 		 return community;
 		 }
+	 /**
+	  * 
+	  * @return chance
+	  */
 	 public ArrayList<Card> returnChance() {
 		 return chance;
 	 }
