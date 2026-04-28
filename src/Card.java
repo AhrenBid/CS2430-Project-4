@@ -1,4 +1,4 @@
-package src;
+
 
 /**
  * Card class to establish a card object

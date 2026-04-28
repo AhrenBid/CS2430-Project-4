@@ -1,3 +1,8 @@
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class TestDriver {
     static int doublesCounter = 0;
     static int currentSpace;
@@ -140,14 +145,42 @@ public class TestDriver {
             }
         } while (currentDiceRoll[1] == 1);
     }
+    
+    public static void toCSV(int n)
+    {
+        
+        StringBuilder bld = new StringBuilder();
+        
+        for (int i = 0; i < 40; i++)
+        {
+            bld.append(board.getSpace(i).getName()).append(",").append(board.getSpace(i).getVisitCount()).append("\n");
+        }
+        
+        
+        try
+        {
+            PrintWriter print = new PrintWriter("resources/Space Visit Counts N" + n + ".csv");
+            print.println(bld.toString());  
+            
+            print.close();
+        }
+    
+        catch(FileNotFoundException e){e.printStackTrace();}
+        
+    }
 
     public static void main(String[] args) {
 
+        boolean hasWritten1Mil = false;
+        boolean hasWritten100k = false;
+        boolean hasWritten10k   = false;
+        boolean hasWritten1k   = false; 
+        
     // Create Player
         Player player1 = new Player("Player 1", 0, 0, 0, 0, true);
     
     // Simulate x turns for player 1
-        while (turnCounter < 10) {
+        while (turnCounter <= 1000000) {
         doublesCounter = 0;
         rollDice(player1);
     
@@ -157,6 +190,31 @@ public class TestDriver {
         System.out.println("Round " + turnCounter + " is now over.");
         System.out.println();
         System.out.println();
+        
+        if(turnCounter >= 1000000 && !hasWritten1Mil)
+        {
+            toCSV(1000000);
+            hasWritten1Mil = true;
+        }
+        
+        else if (turnCounter >= 100000 && !hasWritten100k )
+        {
+            toCSV(100000);
+            hasWritten100k = true;
+        }
+        
+        else if (turnCounter >= 10000 && !hasWritten10k)
+        {
+            toCSV(10000);
+            hasWritten10k = true;
+        }
+        
+        else if (turnCounter >= 1000 && !hasWritten1k)
+        {
+            toCSV(1000);
+            hasWritten1k = true;
+        }
+        
         }
 
         int totalVisits = 0;
@@ -166,7 +224,8 @@ public class TestDriver {
         }
         System.out.println();
         System.out.println("Total visits: " + totalVisits);
-    
+        
+        
     }
     
 }

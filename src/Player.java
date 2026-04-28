@@ -166,26 +166,39 @@ public class Player
      * strat = false means the player will ALWAYS either pay to leave jail or use a get out of jail free card if available
      * @return numTurns     return the number of turns spent in jail, DOES NOT do the roll after leaving jail to determine where to move to.
      */
-    public void playJail()
+    public int playJail()
     {
-        int numTurns = 1;
+        int numTurns = 0;
         
         if(strat) // if true play for doubles
         {
-            int i = 1;
-            dice.roll();
-            while (!dice.isDouble() && numTurns <= 3)
+            int i = 0;
+            //dice.roll();
+            while (numTurns < 3)
             {
                 dice.roll();
+                i++;
                 
-                if (i == 3)
+                System.out.println("Player.playJail: new roll numTurns = " + numTurns);
+                    
+                
+                if(dice.isDouble())
                 {
                     numTurns++;
-                    i = 1;
+                    System.out.println("Player.playJail: returning numTurns = " + numTurns);
+                    turnCount += numTurns;
+                    return numTurns;
                 }
-                i++;
+                if (i%3 == 0)
+                {
+                    numTurns++;
+                    i = 0;
+                }
+                
             }
             turnCount += numTurns;
+            System.out.println("Player.playJail: returning numTurns = " + numTurns);      
+            return numTurns;
         }
         
         else // if not true don't
@@ -193,8 +206,15 @@ public class Player
             if(jailBreak > 0)
                 jailBreak--;
             
+            numTurns = 1;
+            
             turnCount += numTurns;
+            System.out.println("Player.playJail: returning numTurns = " + numTurns);
+            return numTurns;
         }
+        
+       
+        
     }
     
     /**
