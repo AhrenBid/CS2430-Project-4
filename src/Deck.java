@@ -17,7 +17,7 @@ public class Deck {
 	  * Deck constructor
 	  * @param player
 	  */
-	 public Deck(Player player) {
+	 public Deck() {
 		 	this.player = player;
 
 	        community = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Deck {
 	     Card nearestRailroad = new Card("Advance to Nearest Railroad", 0, 0, false, false, false);
 	     Card dividend = new Card("Bank pays you dividend of $50", 0, 50, false, false, false);
 	     Card getOutOfJail = new Card("Get Out Of Jail Free", 0, 0, false, false, true);
-	     Card goBackThree = new Card("Go Back 3 Spaces", player.getLocation() - 3, 0, false, false, false);
+	     Card goBackThree = new Card("Go Back 3 Spaces",- 3, 0, false, false, false);
 	     Card goToJail = new Card("Go To Jail", 0, 0, true, false, false);
 	     Card repairs = new Card("Make general repairs on all your property", 0, 0, false, false, false);
 	     Card poorTax = new Card("Pay Poor Tax of $15", 0, -15, false, false, false);
