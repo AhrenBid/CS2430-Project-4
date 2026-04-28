@@ -144,10 +144,10 @@ public class TestDriver {
     public static void main(String[] args) {
 
     // Create Player
-        Player player1 = new Player("Player 1", 0, 0, 0, 0, false);
+        Player player1 = new Player("Player 1", 0, 0, 0, 0, true);
     
     // Simulate x turns for player 1
-        while (turnCounter < 20) {
+        while (turnCounter < 10) {
         doublesCounter = 0;
         rollDice(player1);
     
@@ -159,8 +159,14 @@ public class TestDriver {
         System.out.println();
         }
 
-        // print each spaces visit count + total
-        
+        int totalVisits = 0;
+        for (int i = 0; i < 40; i++) {
+            System.out.println(board.getSpace(i).getName() + " was landed on " + board.getSpace(i).getVisitCount() + " times.");
+            totalVisits += board.getSpace(i).getVisitCount();
+        }
+        System.out.println();
+        System.out.println("Total visits: " + totalVisits);
+    
     }
     
 }
