@@ -124,7 +124,7 @@ public class Deck {
 			 return choice; 
 		 } 
 		 else {
-			 initializeChanceDeck();
+			 initializeCommunityDeck();
 			 Card choice = community.remove(0);
 			 return choice;
 		 }
