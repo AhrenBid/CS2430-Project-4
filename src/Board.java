@@ -1,6 +1,13 @@
 import java.util.ArrayList;
-
+/**
+* Group 2
+* Zachary Butterfield, Andrew Clarkson, Ahren Bidlingmaier
+* CS2430-002
+* Project 4: Capstone
+* @author Zachary Butterfield
+*/
 public class Board {
+    // ArrayList of all spaces on the board
     ArrayList<Space> board = new ArrayList<Space>();
 
     public Board() {
