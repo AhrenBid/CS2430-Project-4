@@ -1,3 +1,10 @@
+/**
+* Group 2
+* Zachary Butterfield, Andrew Clarkson, Ahren Bidlingmaier
+* CS2430-002
+* Project 4: Capstone
+* @author Zachary Butterfield
+*/
 public class Space {
     private String name;
     private String color;
