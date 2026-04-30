@@ -1,8 +1,13 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-
+/**
+* Group 2
+* Zachary Butterfield, Andrew Clarkson, Ahren Bidlingmaier
+* CS2430-002
+* Project 4: Capstone
+* @author Zachary Butterfield
+*/
 public class TestDriver {
     static int doublesCounter = 0;
     static int currentSpace;
@@ -13,6 +18,7 @@ public class TestDriver {
     static Board board = new Board();
     static Deck deck = new Deck();
 
+    // processes the space the player landed on
     public static void spaceMovementAndAction(Player player1) {
         currentSpace = player1.getLocation();
         System.out.println("Player 1 is now on space " + board.getSpace(currentSpace).getName());
@@ -23,11 +29,12 @@ public class TestDriver {
             Card drawnCommunityCard = deck.drawCommunityCard();
             System.out.println("Player 1 drew a Community Chest Card. " + "Its a " + drawnCommunityCard.getPower());
 
+            // If card is go to go
             if (drawnCommunityCard.goToGo() == true) {
                 System.out.println("Player 1 has been sent to Go.");
                 player1.setLocation(0);
                 spaceMovementAndAction(player1);
-
+            // If card is go to jail
             } else if (drawnCommunityCard.getGoToJail() == true) {
                 System.out.println("Player 1 has been sent to Jail.");
                 player1.sendToJail();
@@ -35,7 +42,7 @@ public class TestDriver {
                 turnCounter = currentturnsWastedinJail + turnCounter;
                 System.out.print("Player 1 is now out of jail after " + currentturnsWastedinJail + " turns. They get to roll again.");
                 rollDice(player1);
-
+            // If card is get out of jail free
             } else if (drawnCommunityCard.getLeaveJail() == true) {
                 System.out.println("Player 1 has drawn a Get Out of Jail Free Card.");
                 player1.addJailBreak();
@@ -44,12 +51,12 @@ public class TestDriver {
         } else if (board.getSpace(currentSpace).getType().equals("CHANCE")) {
             Card drawnChanceCard = deck.drawChanceCard();
             System.out.println("Player 1 drew a Chance Card. " + "Its a " + drawnChanceCard.getPower());
-            
+            // if card is go to go
             if (drawnChanceCard.goToGo() == true) {
                 System.out.println("Player 1 has been sent to Go.");
                 player1.setLocation(0);
                 spaceMovementAndAction(player1);
-
+            // If car is go to jail
             } else if (drawnChanceCard.getGoToJail() == true) {
                 System.out.println("Player 1 has been sent to Jail.");
                 player1.sendToJail();
@@ -57,21 +64,21 @@ public class TestDriver {
                 turnCounter = currentturnsWastedinJail + turnCounter;
                 System.out.print("Player 1 is now out of jail after " + currentturnsWastedinJail + " turns. They get to roll again.");
                 rollDice(player1);
-
+            // if card is get out of jail free
             } else if (drawnChanceCard.getLeaveJail() == true) {
                 System.out.println("Player 1 has drawn a Get Out of Jail Free Card.");
                 player1.addJailBreak();
-
+            // if card is a go back 3 spaces
             } else if (drawnChanceCard.getLocation() == -3) {
                 player1.setLocation(player1.getLocation() - 3);
                 System.out.println("Player 1 has been sent to " + board.getSpace(player1.getLocation()).getName() + ".");
                 spaceMovementAndAction(player1);
-            
+            // if card is a go to specific location
             } else if (drawnChanceCard.getLocation() > 0) {
                 System.out.println("Player 1 has been sent to " + board.getSpace(drawnChanceCard.getLocation()).getName() + ".");
                 player1.setLocation(drawnChanceCard.getLocation());
                 spaceMovementAndAction(player1);
-
+            // if card is advance to nearest railroad
             } else if (drawnChanceCard.getPower().equals("Advance to Nearest Railroad")) {
                 if (player1.getLocation() < 5) {
                     player1.setLocation(5);
@@ -86,7 +93,7 @@ public class TestDriver {
                 }
                 System.out.println("Player 1 has been sent to " + board.getSpace(player1.getLocation()).getName() + ".");
                 spaceMovementAndAction(player1);
-
+            // if card is advance to nearest utility
             } else if (drawnChanceCard.getPower().equals("Advance to Nearest Utility")) {
                 if (player1.getLocation() < 12) {
                     player1.setLocation(12);
@@ -98,7 +105,7 @@ public class TestDriver {
                 System.out.println("Player 1 has been sent to " + board.getSpace(player1.getLocation()).getName() + ".");
                 spaceMovementAndAction(player1);
             }
-
+        // If player lands on go to jail space
         } else if (board.getSpace(currentSpace).getType().equals("GO_TO_JAIL")) {
             System.out.println("Player 1 has been sent to Jail.");
             player1.sendToJail();
@@ -109,21 +116,23 @@ public class TestDriver {
         }
     }
 
+    // Rolls the dice and checks for doubles three times in a row
     public static void rollDice(Player player1) {
         // Roll the dice
         currentDiceRoll = player1.roll();
         System.out.println("Player 1 rolled a " + currentDiceRoll[0] + ".");
+        spaceMovementAndAction(player1);
+
+        // If player did not roll doubles then just return
         if (currentDiceRoll[1] == 0) {
-            spaceMovementAndAction(player1);
             return;
-        } else {
-            spaceMovementAndAction(player1);
         }
 
-        // Keeps rolling if doubles until jail or continue. 
+        // If they did roll doubles then play out each turn and check for three doubles in a row
         do {
             if (currentDiceRoll[1] == 1) {
                 doublesCounter++;
+                // If they rolled doubles three times in a row then they get sent to jail. 
                 if (doublesCounter == 3) {
                     System.out.println("Player 1 rolled doubles three times in a row and went to Jail.");
                     doublesCounter = 0;
@@ -145,42 +154,13 @@ public class TestDriver {
             }
         } while (currentDiceRoll[1] == 1);
     }
-    
-    public static void toCSV(int n)
-    {
-        
-        StringBuilder bld = new StringBuilder();
-        
-        for (int i = 0; i < 40; i++)
-        {
-            bld.append(board.getSpace(i).getName()).append(",").append(board.getSpace(i).getVisitCount()).append("\n");
-        }
-        
-        
-        try
-        {
-            PrintWriter print = new PrintWriter("resources/Space Visit Counts N" + n + ".csv");
-            print.println(bld.toString());  
-            
-            print.close();
-        }
-    
-        catch(FileNotFoundException e){e.printStackTrace();}
-        
-    }
-
     public static void main(String[] args) {
 
-        boolean hasWritten1Mil = false;
-        boolean hasWritten100k = false;
-        boolean hasWritten10k   = false;
-        boolean hasWritten1k   = false; 
-        
     // Create Player
         Player player1 = new Player("Player 1", 0, 0, 0, 0, true);
     
     // Simulate x turns for player 1
-        while (turnCounter <= 1000000) {
+        while (turnCounter < 1000000) {
         doublesCounter = 0;
         rollDice(player1);
     
@@ -190,31 +170,6 @@ public class TestDriver {
         System.out.println("Round " + turnCounter + " is now over.");
         System.out.println();
         System.out.println();
-        
-        if(turnCounter >= 1000000 && !hasWritten1Mil)
-        {
-            toCSV(1000000);
-            hasWritten1Mil = true;
-        }
-        
-        else if (turnCounter >= 100000 && !hasWritten100k )
-        {
-            toCSV(100000);
-            hasWritten100k = true;
-        }
-        
-        else if (turnCounter >= 10000 && !hasWritten10k)
-        {
-            toCSV(10000);
-            hasWritten10k = true;
-        }
-        
-        else if (turnCounter >= 1000 && !hasWritten1k)
-        {
-            toCSV(1000);
-            hasWritten1k = true;
-        }
-        
         }
 
         int totalVisits = 0;
@@ -224,8 +179,5 @@ public class TestDriver {
         }
         System.out.println();
         System.out.println("Total visits: " + totalVisits);
-        
-        
     }
-    
 }
