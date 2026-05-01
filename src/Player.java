@@ -30,7 +30,7 @@ public class Player
     }
     
     /**
-     * 
+     * Roll dice, update internal location, increment turn count
      * @return int[] {dice total, isDouble 1 or 0}   
      */
     public int[] roll()
@@ -48,7 +48,7 @@ public class Player
     }
     
     /**
-     * 
+     * get board location
      * @return boardLocation 
      */
     public int getLocation()
